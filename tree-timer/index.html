@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Growing Tree Timer</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <main class="app">
+
+    <header class="app-header">
+      <h1>Growing Tree Timer</h1>
+      <p class="subtitle">Set a time. Watch your tree grow.</p>
+    </header>
+
+    <section class="timer-display">
+      <div id="timer" class="timer-text">00:00:00</div>
+      <div id="complete-msg" class="complete-msg hidden">🌸 Complete</div>
+    </section>
+
+    <section class="scene">
+      <div id="loading" class="loading">Loading tree…</div>
+      <div id="tree-container" class="tree-container"></div>
+    </section>
+
+    <section class="controls">
+      <button id="btn-start"  class="btn btn-primary">Start</button>
+      <button id="btn-pause"  class="btn">Pause</button>
+      <button id="btn-reset"  class="btn">Reset</button>
+      <button id="btn-stop"   class="btn">Stop</button>
+      <button id="btn-change" class="btn">Change Time</button>
+      <button id="btn-sound"  class="btn btn-sound" title="Toggle sound">🔊</button>
+    </section>
+
+    <section id="change-panel" class="change-panel hidden">
+      <label>Set time</label>
+
+      <div class="time-inputs">
+        <div class="time-field">
+          <input type="number" id="input-hours"   min="0" max="99" value="0" />
+          <span>Hours</span>
+        </div>
+        <div class="time-colon">:</div>
+        <div class="time-field">
+          <input type="number" id="input-minutes" min="0" max="59" value="0" />
+          <span>Minutes</span>
+        </div>
+        <div class="time-colon">:</div>
+        <div class="time-field">
+          <input type="number" id="input-seconds" min="0" max="59" value="30" />
+          <span>Seconds</span>
+        </div>
+      </div>
+
+      <div class="change-panel-actions">
+        <button id="btn-apply"  class="btn btn-primary">Apply</button>
+        <button id="btn-cancel" class="btn">Cancel</button>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="https://unpkg.com/lottie-web@5.12.2/build/player/lottie.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

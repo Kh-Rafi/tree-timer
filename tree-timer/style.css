@@ -1,0 +1,308 @@
+/* ---------- 1. Global Reset & Base ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg:           #f5f4f0;
+  --card:         #ffffff;
+  --text:         #1f1f1f;
+  --text-soft:    #7a7a7a;
+  --border:       #e9e7e2;
+  --accent:       #2f7d4f;
+  --accent-dark:  #255f3c;
+  --accent-soft:  #e4f0e8;
+  --warn:         #b84343;
+  --shadow:       0 8px 24px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.10);
+  --radius:       18px;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+               "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- 2. App Container ---------- */
+.app {
+  width: 100%;
+  max-width: 520px;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeUp 0.5s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- 3. Header ---------- */
+.app-header { text-align: center; }
+
+.app-header h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: var(--text-soft);
+}
+
+/* ---------- 4. Timer Display ---------- */
+.timer-display {
+  text-align: center;
+  min-height: 76px;
+}
+
+.timer-text {
+  font-size: 3rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.4s ease, transform 0.4s ease;
+}
+
+.timer-text.low {
+  color: var(--warn);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.04); }
+}
+
+.complete-msg {
+  margin-top: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--accent);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.complete-msg.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- 5. Tree Scene ---------- */
+.scene {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 12px;
+  min-height: 260px;
+  overflow: hidden;
+}
+
+.tree-container {
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 16 / 10;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.tree-container.ready { opacity: 1; }
+
+.loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+  transition: opacity 0.5s ease;
+}
+
+.loading.hidden { opacity: 0; pointer-events: none; }
+
+/* ---------- 6. Buttons ---------- */
+.controls {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.btn {
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 12px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-family: inherit;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--bg);
+  border-color: #dcd9d2;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-hover);
+}
+
+.btn:active:not(:disabled) { transform: translateY(0); }
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+#btn-change { grid-column: 1 / -1; }
+
+/* Sound button — small, on its own row */
+.btn-sound {
+  grid-column: 1 / -1;
+  font-size: 1.1rem;
+  padding: 10px;
+}
+
+.btn-sound.muted {
+  color: var(--text-soft);
+  background: var(--bg);
+}
+
+/* ---------- 7. Change Time Panel ---------- */
+.change-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  background: var(--bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  animation: fadeUp 0.3s ease both;
+}
+
+.change-panel > label {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  text-align: center;
+}
+
+.time-inputs {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+}
+
+.time-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.time-field input {
+  width: 74px;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 12px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  font-variant-numeric: tabular-nums;
+}
+
+.time-field input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.time-field input::-webkit-outer-spin-button,
+.time-field input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.time-field input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.time-field span {
+  font-size: 0.72rem;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.time-colon {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-soft);
+  padding-bottom: 24px;
+}
+
+.change-panel-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.hidden { display: none !important; }
+
+/* ---------- 8. Mobile tweaks ---------- */
+@media (max-width: 420px) {
+  .app { padding: 24px 18px; }
+  .timer-text { font-size: 2.4rem; }
+  .controls { grid-template-columns: repeat(2, 1fr); }
+  #btn-change { grid-column: 1 / -1; }
+  .btn-sound { grid-column: 1 / -1; }
+  .time-field input {
+    width: 62px;
+    font-size: 1.15rem;
+  }
+}

@@ -32,7 +32,7 @@ const SOUND_KEY     = "treeTimerSoundMuted";
 const DEFAULT_TIME  = 30;
 const TOTAL_FRAMES  = 320;          // bloom frame
 const FADE_MS       = 1500;         // fade time (ms)
-const TARGET_VOLUME = 0.45;         // max volume (0 → 1)
+const TARGET_VOLUME = 1.0;         // max volume (0 → 1)
 
 /* ---------- 3. State ---------- */
 let totalSeconds = DEFAULT_TIME;
